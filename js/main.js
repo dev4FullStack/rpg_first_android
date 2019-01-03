@@ -2,21 +2,16 @@ $(document).ready(function(){
 
 	Crafty.init();
 
-	
-	Crafty.sprite(32, "img/actorFirst_32.32.png", {
+	Crafty.load({"images" : ["img/actorFirst_32.32.png"] },function(){
+	   Crafty.sprite(32, "img/actorFirst_32.32.png", {
 			ship:  [0,0],
 			ship2: [0,1],
 			ship3: [0,2],
 			ship4: [0,3]
-		});
-	Crafty.sprite(32, "img/map_phase1.png", {
-			wall1: [0][0]
-		});
-
-	
-	
-
-
+            });
+        
+        Crafty.scene("main");
+        });
 
 	Crafty.scene("main", function(){
 		var actionMouse = Crafty.e("2D, Canvas, Mouse").
@@ -37,12 +32,9 @@ $(document).ready(function(){
 				
 			}
 		});
-		let player = Crafty.e("2D, Canvas, player, Hero, Animate, SpriteAnimation");
-		
-		Crafty.e("2D, Canvas, wall_left, solid, wall1").
-			attr({x : 50,y : 50,z : 2});
+		var player = Crafty.e("2D, Canvas, player, Hero, Animate, SpriteAnimation");
 
-		Crafty.scene("main");
+		
 		player.reel("stopDown", 600, [
 			[0,0]
 		]);
@@ -96,7 +88,7 @@ let moveCtrl = function(craft=undefined,e=undefined,player){
 
 }
 let moveNow = function(player) {
-	console.log(player.OR);
+	//console.log(player.OR);
 	switch(player.OR){
 		case 'RIGHT':
 			if(!player.isPlaying("step_right"))
