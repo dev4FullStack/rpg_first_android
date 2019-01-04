@@ -20,7 +20,7 @@ $(document).ready(function(){
 
 	Crafty.scene("main", function(){
 		var actionMouse = Crafty.e("2D, Canvas, Mouse").
-		attr({x : 0,y : 0,w : 465, h : 268 }).
+		attr({x : 0,y : 0,w : Crafty.viewport.width, h : Crafty.viewport.height }).
 		bind('Click', function(e/*MouseEvent*/){
   			moveCtrl(Crafty,e,player);
             player.speedy = 0.8;
@@ -43,7 +43,7 @@ $(document).ready(function(){
         
 		Crafty.c("Hero",{ init : function(){
 			this.requires("2D, Canvas, ship, Color, palyer, SpriteAnimation, Collision").
-			attr({x : 232/*Crafty.viewport.width / 2*/, y : 134/*Crafty.viewport.height / 2*/, speedy : 0.8,
+			attr({x : Crafty.viewport.width / 2, y : Crafty.viewport.height / 2, speedy : 0.8,
 				  OR : 'NULL'}).
 			origin("center").
 			bind("EnterFrame", function(){
