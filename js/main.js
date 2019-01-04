@@ -31,10 +31,10 @@ $(document).ready(function(){
         var player = Crafty.e("2D, Canvas, player, Hero, Animate, SpriteAnimation, Collision").
             bind("Move", function(from){
                 //console.log(this.x);
-                if(this.hit('solid')){
-                    player.speedy = -1;
+                if(this.hit('arbuste')){
+                    this.speedy = -2;
                 }else{
-                    player.speedy = 0.8;
+                    this.speedy = 0.8;
                 }
                 if(this.hit('porte')){
                    
