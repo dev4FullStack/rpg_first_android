@@ -2,13 +2,18 @@ $(document).ready(function(){
 
 	Crafty.init();
 
-	Crafty.load({"images" : ["img/actorFirst_32.32.png"] },function(){
+	Crafty.load({"images" : ["img/actorFirst_32.32.png","img/map_phase1.png"] },function(){
 	   Crafty.sprite(32, "img/actorFirst_32.32.png", {
 			ship:  [0,0],
 			ship2: [0,1],
 			ship3: [0,2],
 			ship4: [0,3]
             });
+        Crafty.sprite(16, "img/map_phase1.png",{
+            wall_flood: [7,0],
+            wall_arbuste: [0,12]
+        });
+        
         
         Crafty.scene("main");
         });
@@ -18,23 +23,38 @@ $(document).ready(function(){
 		attr({x : 0,y : 0,w : Crafty.viewport.width, h : Crafty.viewport.height }).
 		bind('Click', function(e/*MouseEvent*/){
   			moveCtrl(Crafty,e,player);
+            player.speedy = 0.8;
 		});
-         
-
+        
+        worldMapp.generate('FORET_AU_LOUP');
+        
+        var player = Crafty.e("2D, Canvas, player, Hero, Animate, SpriteAnimation, Collision").
+            bind("Move", function(from){
+                //console.log(this.x);
+                if(this.hit('solid')){
+                    player.speedy = -1;
+                }else{
+                    player.speedy = 0.8;
+                }
+                if(this.hit('porte')){
+                   
+                }
+            });
+        
 		Crafty.c("Hero",{ init : function(){
-			this.requires("2D, Canvas, ship, Color, palyer, SpriteAnimation").
-			attr({x : Crafty.viewport.width / 2, y : Crafty.viewport.height / 2, speedy : 0.2,
+			this.requires("2D, Canvas, ship, Color, palyer, SpriteAnimation, Collision").
+			attr({x : Crafty.viewport.width / 2, y : Crafty.viewport.height / 2, speedy : 0.8,
 				  OR : 'NULL'}).
 			origin("center").
 			bind("EnterFrame", function(){
 				moveNow(this);
 			});
-				
+				return this;
 			}
 		});
-		var player = Crafty.e("2D, Canvas, player, Hero, Animate, SpriteAnimation");
 
-		
+        
+        
 		player.reel("stopDown", 600, [
 			[0,0]
 		]);
