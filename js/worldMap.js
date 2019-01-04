@@ -17,16 +17,19 @@ var worldMapp = {
                    for(let i = 0; i < 55; i++){
                        for(let i2 = 0; i2 < 25; i2++)
                             Crafty.e("2D, Canvas, wall_flood, flood,Animate, SpriteAnimation").
-                                attr({x:(Crafty.viewport.width / 6)+(i*15),y:(Crafty.viewport.height / 6)+(i2*15)});
+                                attr({x:0+(i*15),y:0+(i2*15)});
                    }
                    
                    
                    for(let i = 1; i < 10; i++){
                       Crafty.e("2D, Canvas, wall_arbuste, arbuste,Animate, SpriteAnimation,Collision").
-                   attr({x:Crafty.math.randomInt((Crafty.viewport.width/2)-160,(Crafty.viewport.width/2)+160), y:Crafty.math.randomInt(( Crafty.viewport.height/2)-160,( Crafty.viewport.height/2)+160)});
+                   attr({x:Crafty.math.randomInt(0,160), y:Crafty.math.randomInt(0,160)});
                    }
                    break;
            }
        }
+    },
+    generateSea : function(){
+        
     }
 }
