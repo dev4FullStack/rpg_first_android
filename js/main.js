@@ -28,21 +28,38 @@ $(document).ready(function(){
         
         worldMapp.generate('FORET_AU_LOUP');
         
+        var bagLife = Crafty.e("2D, DOM, Text").
+            attr({x : Crafty.viewport.width-200, y : Crafty.viewport.height-30, w : 200 , h : 30,
+                  heart : 5, baie : 0, diaments: 3}).
+            text("[ Vie : 5 | Baie : 0 | Diaments : 3 ]").
+            css({
+                 color: "#FFF",
+                 backgroundColor: "rgba(0,0,0,.5)",
+                 textAlign: "center",
+                 borderRadius: "10px"
+                });
+        bagLife.goLife = function(lif){
+            this.heart += lif;
+            this.text("[ Vie : "+this.heart+" | Baie : 0 | Diaments : 3 ]");
+        }
+       // bagLife.text("HAHHA");
+        
         var player = Crafty.e("2D, Canvas, player, Hero, Animate, SpriteAnimation, Collision").
             bind("Move", function(from){
                 //console.log(this.x);
                 if(this.hit('arbuste')){
                     this.speedy = -2;
+                    bagLife.goLife(-2);
                 }else{
                     this.speedy = 0.8;
                 }
-                if(this.hit('porte')){
+                if(this.hit('arbuste_win')){
                    
                 }
             });
-        
+            
 		Crafty.c("Hero",{ init : function(){
-			this.requires("2D, Canvas, ship, Color, palyer, SpriteAnimation, Collision").
+			this.requires("2D, Canvas, ship, Color, player, SpriteAnimation, Collision").
 			attr({x : Crafty.viewport.width / 2, y : Crafty.viewport.height / 2, speedy : 0.8,
 				  OR : 'NULL'}).
 			origin("center").

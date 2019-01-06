@@ -22,8 +22,19 @@ var worldMapp = {
                    
                    
                    for(let i = 1; i < 10; i++){
-                      Crafty.e("2D, Canvas, wall_arbuste, arbuste,Animate, SpriteAnimation,Collision").
-                   attr({x:Crafty.math.randomInt(0,160), y:Crafty.math.randomInt(0,160)});
+                       
+                      let swap = Crafty.e("2D, Canvas, wall_arbuste, arbuste,Animate, SpriteAnimation,Collision").
+                      attr({x:Crafty.math.randomInt(0,160), y:Crafty.math.randomInt(0,160)});
+                      
+                       /*
+                      if(i == Crafty.math.randomInt(1,10))
+                          console.log(' x : '+swap.x+' y : '+swap.y)
+                          swap.bind('Moved',function(from){
+                              if(swap.hit('player'))
+                                console.log('Vous avez trouvez une baie');
+                          });
+                    */
+                       
                    }
                    break;
            }
