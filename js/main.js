@@ -38,18 +38,34 @@ $(document).ready(function(){
                  textAlign: "center",
                  borderRadius: "10px"
                 });
-        bagLife.goLife = function(lif){
-            this.heart += lif;
-            this.text("[ Vie : "+this.heart+" | Baie : 0 | Diaments : 3 ]");
+        bagLife.goLife = function(act){
+            this.heart += act;
+            this.text("[ Vie : "+this.heart+" | Baie : "+this.baie+" | Diaments : "+this.diaments+" ]");
+        }
+        bagLife.goBaie = function(act){
+            this.baie += act;
+            this.text("[ Vie : "+this.heart+" | Baie : "+this.baie+" | Diaments : "+this.diaments+" ]");
+        }
+        bagLife.goDiaments = function(act){
+            this.diaments += act;
+            this.text("[ Vie : "+this.heart+" | Baie : "+this.baie+" | Diaments : "+this.diaments+" ]");
+        }
+        bagLife.initBag = function(){
+            this.text("[ Vie : "+this.heart+" | Baie : "+this.baie+" | Diaments : "+this.diaments+" ]");
         }
        // bagLife.text("HAHHA");
         
         var player = Crafty.e("2D, Canvas, player, Hero, Animate, SpriteAnimation, Collision").
             bind("Move", function(from){
                 //console.log(this.x);
-                if(this.hit('arbuste')){
+                if((hitDatas = this.hit('arbuste'))){
+                    if(typeof hitDatas[0].obj.__c.baie != 'undefined'){
+                        delete(hitDatas[0].obj.__c.baie);
+                        bagLife.goBaie(+2);
+                        hitDatas[0].obj.destroy();
+                    }
                     this.speedy = -2;
-                    bagLife.goLife(-2);
+                    
                 }else{
                     this.speedy = 0.8;
                 }
