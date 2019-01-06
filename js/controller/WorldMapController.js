@@ -1,8 +1,8 @@
-var worldMapp = {
-    generate : function(wall_affect=null){
+var WorldMappController = {
+    generate : function(map_stage=null){
         
         
-        if(wall_affect == null){
+        if(map_stage == null){
             
             Crafty.e("2D, Canvas, wall_flood, solid,Animate, SpriteAnimation").
                 attr({x:Crafty.viewport.width / 2,y:50});
@@ -12,7 +12,7 @@ var worldMapp = {
         
         }
        else{
-           switch(wall_affect){
+           switch(map_stage){
                case 'FORET_AU_LOUP':
                    for(let i = 0; i < 55; i++){
                        for(let i2 = 0; i2 < 25; i2++)

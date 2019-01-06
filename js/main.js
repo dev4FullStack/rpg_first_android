@@ -22,11 +22,10 @@ $(document).ready(function(){
 		var actionMouse = Crafty.e("2D, Canvas, Mouse").
 		attr({x : 0,y : 0,w : Crafty.viewport.width, h : Crafty.viewport.height }).
 		bind('Click', function(e/*MouseEvent*/){
-  			moveCtrl(Crafty,e,player);
-            player.speedy = 0.8;
+  			PlayerController.move(Crafty,e,player);//déplacements du joueur
 		});
         
-        worldMapp.generate('FORET_AU_LOUP');
+        WorldMappController.generate('FORET_AU_LOUP');
         
         var bagLife = Crafty.e("2D, DOM, Text").
             attr({x : Crafty.viewport.width-200, y : Crafty.viewport.height-30, w : 200 , h : 30,
@@ -58,17 +57,7 @@ $(document).ready(function(){
         var player = Crafty.e("2D, Canvas, player, Hero, Animate, SpriteAnimation, Collision").
             bind("Move", function(from){
                 //console.log(this.x);
-                if((hitDatas = this.hit('arbuste'))){
-                    if(typeof hitDatas[0].obj.__c.baie != 'undefined'){
-                        delete(hitDatas[0].obj.__c.baie);
-                        bagLife.goBaie(+2);
-                        hitDatas[0].obj.destroy();
-                    }
-                    this.speedy = -2;
-                    
-                }else{
-                    this.speedy = 0.8;
-                }
+                CollisionController.run(this,bagLife,'FORET_AU_LOUP');
                 if(this.hit('arbuste_win')){
                    
                 }
@@ -77,106 +66,20 @@ $(document).ready(function(){
 		Crafty.c("Hero",{ init : function(){
 			this.requires("2D, Canvas, ship, Color, player, SpriteAnimation, Collision").
 			attr({x : Crafty.viewport.width / 2, y : Crafty.viewport.height / 2, speedy : 0.8,
-				  OR : 'NULL'}).
+				  origin_speed : 0.8,OR : 'NULL'}).
 			origin("center").
 			bind("EnterFrame", function(){
-				moveNow(this);
+                //gestion des mouvements du perso
+				PlayerController.moveNow(this);
 			});
 				return this;
 			}
 		});
-
         
-        
-		player.reel("stopDown", 600, [
-			[0,0]
-		]);
-		player.reel("stopUp", 600, [
-			[0,3]
-		]);
-		player.reel("stopLeft", 600, [
-			[0,1]
-		]);
-		player.reel("stopRight", 600, [
-			[0,2]
-		]);
-
-   		player.reel("step_left", 400, [
-  			[0, 1],
-  			[1, 1],
-  			[2, 1],
-
-		]);
-		player.reel("step_down", 400, [
-  			[0, 0],
-  			[1, 0],
-  			[2, 0],
-
-		]);
-		player.reel("step_right", 400, [
-  			[0, 2],
-  			[1, 2],
-  			[2, 2],
-
-		]);
-		player.reel("step_up", 400, [
-  			[0, 3],
-  			[1, 3],
-  			[2, 3],
-
-		]);
+        //pile des animations prédéfinis
+        PlayerController.stackAnimate(player);
 
 	});
 	Crafty.scene("main");
 
 });
-
-let moveCtrl = function(craft=undefined,e=undefined,player){
-	//console.log("Test : craft : "+craft.viewport.width);
-	//alert(e.realX + ' : '+ player.speedy);
-
-	player.OR = e.realX < 50 ? 'LEFT' : e.realX > (Crafty.viewport.width-50) ? 'RIGHT' : e.realY < 50 ?
-			 'UP' : e.realY > (Crafty.viewport.height-50) ? 'DOWN' : 'NULL';
-
-
-}
-let moveNow = function(player) {
-	//console.log(player.OR);
-	switch(player.OR){
-		case 'RIGHT':
-			if(!player.isPlaying("step_right"))
-				player.animate("step_right", -1);
-			player.x += player.speedy;
-			player.backOR = player.OR;
-			break;
-		case 'LEFT':
-			if(!player.isPlaying("step_left"))
-				player.animate("step_left", -1);
-			player.x -= player.speedy
-			player.backOR = player.OR;
-			break;
-		case 'UP':
-			if(!player.isPlaying("step_up"))
-				player.animate("step_up", -1);
-			player.y -= player.speedy
-			player.backOR = player.OR;
-			break;
-		case 'DOWN':
-			if(!player.isPlaying("step_down"))
-				player.animate("step_down", -1);
-			player.y += player.speedy
-			player.backOR = player.OR;
-			break;
-		default:
-			if(player.backOR == "RIGHT")
-				player.animate("stopRight");
-			else if(player.backOR == "LEFT")
-				player.animate("stopLeft");
-			else if(player.backOR == "UP")
-				player.animate("stopUp");
-			else if(player.backOR == "DOWN")
-				player.animate("stopDown");
-			//console.log('Direction'+'['+player.OR+']'+"#"+e.realY+"#");
-			break;
-	}
-}
