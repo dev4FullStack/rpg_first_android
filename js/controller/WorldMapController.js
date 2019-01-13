@@ -1,7 +1,5 @@
 var WorldMappController = {
     generate : function(map_stage=null){
-
-
         if(map_stage == null){
 
             Crafty.e("2D, Canvas, wall_flood, solid,Animate, SpriteAnimation").
@@ -28,11 +26,16 @@ var WorldMappController = {
                       attr({x:Crafty.math.randomInt(0,160), y:Crafty.math.randomInt(0,160)});
 
                    }
+                   this.generateSea(0,20,15,8);
                    break;
            }
        }
     },
-    generateSea : function(){
-
+    generateSea : function(tilesX, tilesY, tilesW, tilesH){
+        for (let xi = 0; xi < tilesW; xi++)
+          for(let yi = 0; yi < tilesH; yi++){
+              Crafty.e("2D, Canvas, wall_sea, sea, Animate, SpriteAnimation, Collision").
+                attr({x: (tilesX*15)+(xi*15), y: (tilesY*15)+(yi*15)});
+          }
     }
 }

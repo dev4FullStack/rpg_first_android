@@ -13,7 +13,8 @@ $(document).ready(function(){
             });
         Crafty.sprite(16, "img/map_phase1.png",{
             wall_flood: [7,0],
-            wall_arbuste: [0,12]
+            wall_arbuste: [0,12],
+						wall_sea:[0, 3]
         });
 
 
