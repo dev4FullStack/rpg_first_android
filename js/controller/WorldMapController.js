@@ -31,11 +31,52 @@ var WorldMappController = {
            }
        }
     },
-    generateSea : function(tilesX, tilesY, tilesW, tilesH){
-        for (let xi = 0; xi < tilesW; xi++)
+    generateSea : function(tilesX, tilesY, tilesW, tilesH, nSwap='opal'){
+      if(typeof this.sea_swap == 'undefined'){
+
+          this.sea_swap = new Array();
+          console.log('INIT');
+        }
+      this.sea_swap[nSwap] = new Array();
+        for (let xi = 0; xi < tilesW; xi++){
+          this.sea_swap[nSwap][xi] = new Array();
           for(let yi = 0; yi < tilesH; yi++){
-              Crafty.e("2D, Canvas, wall_sea, sea, Animate, SpriteAnimation, Collision").
+              this.sea_swap[nSwap][xi][yi] = Crafty.e("2D, Canvas, wall_sea, sea,  Animate, SpriteAnimation, Collision").
                 attr({x: (tilesX*15)+(xi*15), y: (tilesY*15)+(yi*15)});
           }
+        }
+        return this;
+    },
+    seaAnimate : function(minSurf=3,maxSurf=6,nSwap='opal'){
+      if(Array.isArray(this.sea_swap)){
+        for(let i = 0; i < this.sea_swap[nSwap].length; i++){
+          for(let i2 = 0; i2 < this.sea_swap[nSwap][i].length; i2++){
+            this.sea_swap[nSwap][i][i2].reel("sea_move",2200,[
+              [1,3],[2,3],[0,3]
+            ]);
+            if(i > minSurf && i < maxSurf)
+              this.sea_swap[nSwap][i][i2].animate("sea_move", -1);
+          }
+        }
+
+
+      }else{
+        alert("cc");
+      }
+      return this;
+    },
+    seaDispoAnimate : function(minSurf=3,maxSurf=6,nSwap='opal'){
+      if(Array.isArray(this.sea_swap)){
+        for(let i = 0; i < this.sea_swap[nSwap].length; i++)
+          for(let i2 = 0; i2 < this.sea_swap[nSwap][i].length; i2++){
+            if(i > minSurf && i < maxSurf)
+              this.sea_swap[nSwap][i][i2].animate("sea_move", -1);
+          }
+
+      }else{
+
+      }
+      return this;
     }
+
 }

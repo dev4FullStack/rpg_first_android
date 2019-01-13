@@ -10,7 +10,9 @@ let CollisionController = {
                         hitDatas[0].obj.destroy();
                     }
                     player.speedy = -2;
-                    
+
+                }else if(player.hit('sea')){
+                  player.speedy = -2;
                 }else{
                     player.speedy = 0.8;
                 }

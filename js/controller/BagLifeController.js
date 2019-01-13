@@ -11,7 +11,6 @@ let BagLifeController = function(){
            borderRadius: "10px",
            fontSize: "18px"
           });
-      console.log(this.bag.heart);
       return this;
     }
     this.goLife = function(act){

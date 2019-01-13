@@ -55,6 +55,10 @@ $(document).ready(function(){
 
         //pile des animations prédéfinis
         PlayerController.stackAnimate(player);
+				WorldMappController.seaAnimate(8,12).
+					seaDispoAnimate(1,3).
+					seaDispoAnimate(3,7);
+				WorldMappController.generateSea(12,5,5,5,'opium').seaAnimate(1,3,'opium');
 
 	});
 	Crafty.scene("main");
