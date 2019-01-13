@@ -1,4 +1,4 @@
-//$.getScript("./js/crafty-ctrl/crafty.js");
+//$.getScript("/js/controller/BagLifeController.js");
 
 $(document).ready(function(){
 
@@ -28,34 +28,7 @@ $(document).ready(function(){
 		});
 
         WorldMappController.generate('FORET_AU_LOUP');
-
-        var bagLife = Crafty.e("2D, DOM, Text").
-            attr({x : Crafty.viewport.width-330, y : Crafty.viewport.height-40, w : 300 , h : 30,
-                  heart : 5, baie : 0, diaments: 3}).
-            text("[ Vie : 5 | Baie : 0 | Diaments : 3 ]").
-            css({
-                 color: "#FFF",
-                 backgroundColor: "rgba(0,0,0,.5)",
-                 textAlign: "center",
-                 borderRadius: "10px",
-								 fontSize: "18px"
-                });
-        bagLife.goLife = function(act){
-            this.heart += act;
-            this.text("[ Vie : "+this.heart+" | Baie : "+this.baie+" | Diaments : "+this.diaments+" ]");
-        }
-        bagLife.goBaie = function(act){
-            this.baie += act;
-            this.text("[ Vie : "+this.heart+" | Baie : "+this.baie+" | Diaments : "+this.diaments+" ]");
-        }
-        bagLife.goDiaments = function(act){
-            this.diaments += act;
-            this.text("[ Vie : "+this.heart+" | Baie : "+this.baie+" | Diaments : "+this.diaments+" ]");
-        }
-        bagLife.initBag = function(){
-            this.text("[ Vie : "+this.heart+" | Baie : "+this.baie+" | Diaments : "+this.diaments+" ]");
-        }
-       // bagLife.text("HAHHA");
+				let bagLife = new BagLifeController().gen();
 
         var player = Crafty.e("2D, Canvas, player, Hero, Animate, SpriteAnimation, Collision").
             bind("Move", function(from){

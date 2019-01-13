@@ -14,7 +14,7 @@ var WorldMappController = {
        else{
            switch(map_stage){
                case 'FORET_AU_LOUP':
-                   console.log(Crafty.viewport.height / 16);
+                  // console.log(Crafty.viewport.height / 16);
                    for(let i = 0; i < (Crafty.viewport.width / 16)+4; i++){
                        for(let i2 = 0; i2 < (Crafty.viewport.height / 16)+3; i2++)
                             Crafty.e("2D, Canvas, wall_flood, flood,Animate, SpriteAnimation").
